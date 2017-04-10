@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+    <bean id="appProperties"
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <!--<property name="location" value="classpath:application.properties" />-->
+        <property name="location" value="file:////opt/R1/tomcat7-jenkins/jconf/jobs/RDS/application.properties"/>
+    </bean>
+    <bean id="factory" class="com.rabbitmq.client.ConnectionFactory">
+        <property name="host" value="${rabbit.host}"/>
+        <property name="port" value="${rabbit.port}"/>
+        <property name="username" value="${rabbit.username}"/>
+        <property name="password" value="${rabbit.password}"/>
+    </bean>
+
+    <bean id="service" class="ru.rtlabs.Service.Service">
+        <property name="ur" value="http://10.10.1.15:9765/services/BURYATIYA.SOAP11Endpoint/"/>
+      <!-- <property name="connectionFactory" ref="factory"/>-->
+        <property name="queue" value="${rabbit.queue}"/>
+    </bean>
+</beans>
